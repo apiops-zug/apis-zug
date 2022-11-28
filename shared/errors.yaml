@@ -1,0 +1,63 @@
+error_detail:
+  type: object
+  required:
+    - field
+    - value
+    - location
+    - issue
+    - description
+  properties:
+    field:
+      type: string
+    value:
+      type: string
+    location:
+      type: string
+    issue:
+      type: string
+    description:
+      type: string
+error_link:
+  type: object
+  required:
+    - rel
+    - link
+  properties:
+    rel:
+      type: string
+    link:
+      type: string
+error_400:
+  type: object
+  required:
+    - name
+    - message
+    - details
+  properties:
+    name:
+      type: string
+    message:
+      type: string
+    details:
+      type: array
+      items:
+        anyOf:
+          - $ref: "#/errorDetail"
+    links:
+      type: array
+      items:
+        anyOf:
+          - $ref: "#/errorLink"
+error:
+  type: object
+  required:
+    - code
+    - error
+    - description
+  properties:
+    code:
+      type: string
+    error:
+      type: string
+    description:
+      type: string
