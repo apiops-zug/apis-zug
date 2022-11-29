@@ -1,5 +1,10 @@
 name: Generate API Gateway configuration
 
+on:
+  pull_request:
+    branches:
+      - main
+
 jobs:
   Linux:
     name: Generating API Gateway configuration
