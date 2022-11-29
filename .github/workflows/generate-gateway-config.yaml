@@ -19,6 +19,6 @@ jobs:
       - run: inso --version
         id: inso_version
       - run: echo '${{ toJson(steps.inso_version.outputs) }}'
-      - run: ls-l
+      - run: ls -l
 #      - name: Generate declarative config
 #        run: inso generate config "Designer Demo" --type declarative --ci
