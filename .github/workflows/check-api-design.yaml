@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Run Spectral
+    name: Checking API design standards
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

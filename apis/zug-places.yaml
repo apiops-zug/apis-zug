@@ -9,6 +9,11 @@ info:
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
+servers:
+  - url: https://api.zug.digital/v1
+    description: Production server (uses live data)
+  - url: https://sandbox-api.zug.digital/v1
+    description: Sandbox server (uses test data)
 paths:
   /countries:
     get:
@@ -22,6 +27,8 @@ paths:
                 $ref: '#/components/schemas/countries'
           description: Countries
       operationId: get-countries
+      description: It return a list of countries
+      summary: It return a list of countries
     post:
       requestBody:
         content:
@@ -39,6 +46,8 @@ paths:
                 $ref: '#/components/schemas/country-created'
           description: Country created successfully
       operationId: create-country
+      description: It creates a country
+      summary: It creates a country
   /states:
     get:
       tags:
@@ -76,6 +85,8 @@ paths:
                 $ref: '#/components/schemas/state-created'
           description: State created successfully
       operationId: create-state
+      description: It creates a state
+      summary: It creates a state
   /cities:
     get:
       tags:
@@ -96,6 +107,8 @@ paths:
                 $ref: '#/components/schemas/cities'
           description: Cities from state
       operationId: get-cities
+      description: It return a list of cities
+      summary: It return a list of cities
     post:
       requestBody:
         content:
@@ -113,6 +126,8 @@ paths:
                 $ref: '#/components/schemas/city-created'
           description: It creates a city
       operationId: create-city
+      description: It creates a city
+      summary: It creates a city
 components:
   schemas:
     country:
