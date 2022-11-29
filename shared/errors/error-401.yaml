@@ -1,0 +1,10 @@
+error401:
+  type: object
+  properties:
+    error:
+      type: string
+    description:
+      type: string
+  example:
+    error : "Unauthorized"
+    description: "You cannot perform this operation"

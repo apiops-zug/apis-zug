@@ -1,0 +1,640 @@
+openapi: 3.0.2
+info:
+  title: Zug - Partners
+  version: 1.0.0
+  description: Zug Partners API
+  contact:
+    name: Claudio E. de Oliveira
+    email: claudioed.oliveira@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+paths:
+  /partners:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-partner'
+        required: true
+      tags:
+        - partners
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/partner-created'
+          description: Partner created successfully
+      operationId: create-partner
+      summary: It create partner
+  '/partners/{id}/services':
+    get:
+      tags:
+        - services
+      parameters:
+        -
+          name: id
+          description: Partner ID
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/partner-service'
+          description: Partner Services
+      operationId: get-partner-services
+      summary: It will retrieve partner services
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-service'
+        required: true
+      tags:
+        - services
+      parameters:
+        -
+          name: id
+          description: Partner ID
+          in: path
+          required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-created'
+          description: Service created successfully
+      operationId: create-service
+      summary: It creates a service
+  '/partners/{id}/documents':
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/document-upload-request'
+        required: true
+      tags:
+        - partners
+      parameters:
+        -
+          name: id
+          description: Partner ID
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document-upload-requested'
+          description: When document was requested successfully
+      operationId: upload-document-request
+      summary: Request a url to upload a document
+  '/partners/{id}/services/{serviceId}/places':
+    get:
+      tags:
+        - services
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-place'
+          description: Partner service places
+      operationId: get-partner-service-places
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-place'
+        required: true
+      tags:
+        - services
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/place-created'
+          description: Place created successfully
+      operationId: create-service-place
+    delete:
+      tags:
+        - services
+      responses:
+        '204':
+          description: Place deleted successfully
+      operationId: delete-service-place
+    parameters:
+      -
+        name: id
+        description: Partner ID
+        schema:
+          type: string
+        in: path
+        required: true
+      -
+        name: serviceId
+        description: Partner Service ID
+        schema:
+          type: string
+        in: path
+        required: true
+  '/partners/{id}/services/{serviceId}':
+    get:
+      tags:
+        - services
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/partner-service'
+          description: Partner service
+      operationId: get-partner-service
+    delete:
+      tags:
+        - services
+      responses:
+        '204':
+          description: Service deleted successfully
+      operationId: delete-service
+      summary: It will delete service
+    parameters:
+      -
+        name: id
+        description: Partner ID
+        schema:
+          type: string
+        in: path
+        required: true
+      -
+        name: serviceId
+        description: Partner service ID
+        schema:
+          type: string
+        in: path
+        required: true
+components:
+  schemas:
+    address:
+      title: Root Type for address
+      description: ''
+      required:
+        - country
+        - state
+        - postal_code
+        - building
+        - city
+        - street
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        country:
+          $ref: '#/components/schemas/country'
+        state:
+          $ref: '#/components/schemas/state'
+        text:
+          type: string
+        building:
+          type: string
+        house:
+          type: string
+        postal_code:
+          type: string
+      example:
+        street: 22 Rue du Grenier Saint-Lazare
+        postal_code: '75003'
+        city: Campinas
+        country:
+          code: BRA
+          name: Brazil
+        state:
+          code: SP
+          name: Sao Paulo
+        text: |-
+          22 Rue du Grenier Saint-Lazare
+          75003 Paris
+          France
+        building: Castro Alves
+        house: '22'
+    country:
+      title: Root Type for country
+      description: '    '
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+      example:
+        code: BRA
+        name: Brazil
+    state:
+      title: Root Type for state
+      description: ''
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+      example:
+        code: SP
+        name: Sao Paulo
+    document:
+      title: Root Type for document
+      description: ''
+      type: object
+      properties:
+        type:
+          type: string
+        document:
+          type: string
+      example:
+        type: cpf
+        document: '1111111111'
+    owner:
+      title: Root Type for owner
+      description: ''
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              document:
+                type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+      example:
+        first_name: Joao
+        last_name: Oliveira
+        documents:
+          -
+            type: cpf
+            document: '1111111111'
+    create-partner:
+      title: Root Type for create-partner
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              document:
+                type: string
+        category:
+          type: string
+        owner:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            documents:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  document:
+                    type: string
+        company_address:
+          type: object
+          properties:
+            street:
+              type: string
+            postalCode:
+              type: string
+            city:
+              type: string
+            country:
+              type: object
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+            state:
+              type: object
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+            text:
+              type: string
+            building:
+              type: string
+            house:
+              type: string
+        legal_name:
+          type: string
+        main_place:
+          type: object
+          properties:
+            street:
+              type: string
+            postalCode:
+              type: string
+            city:
+              type: string
+            country:
+              type: object
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+            state:
+              type: object
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+            text:
+              type: string
+            building:
+              type: string
+            house:
+              type: string
+      example:
+        name: Bug Maluco
+        legal_name: BUG JP TURISMO
+        documents:
+          -
+            type: cnpj
+            document: '1111111111'
+        company_address:
+          street: 22 Rue du Grenier Saint-Lazare
+          postal_code: '75003'
+          city: Campinas
+          country:
+            code: BRA
+            name: Brazil
+          state:
+            code: SP
+            name: Sao Paulo
+          text: |-
+            22 Rue du Grenier Saint-Lazare
+            75003 Paris
+            France
+          building: Castro Alves
+          house: '22'
+        main_place:
+          street: 22 Rue du Grenier Saint-Lazare
+          postal_code: '75003'
+          city: Campinas
+          country:
+            code: BRA
+            name: Brazil
+          state:
+            code: SP
+            name: Sao Paulo
+          text: |-
+            22 Rue du Grenier Saint-Lazare
+            75003 Paris
+            France
+          building: Castro Alves
+          house: '22'
+        category: transportation
+        owner:
+          first_name: Joao
+          last_name: Oliveira
+          documents:
+            -
+              type: cpf
+              document: '1111111111'
+    partner-created:
+      title: Root Type for partner-created
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+      example:
+        id: 79639d09-9ab8-4967-9567-1ee0db065feb
+    document-upload-requested:
+      title: Root Type for document-upload-requested
+      description: ''
+      type: object
+      properties:
+        partner_id:
+          type: string
+        type:
+          type: string
+        signed_url:
+          type: string
+      example:
+        partner_id: 61081bf0-24bb-4469-aa50-9028a1217167
+        type: cpf
+        signed_url: 'http://zug.aws.s3/564e9842-e839-4846-8a9c-805eacfb46b1'
+    document-upload-request:
+      title: Root Type for document-upload-request
+      description: ''
+      type: object
+      properties:
+        type:
+          type: string
+      example:
+        type: cpf
+    create-service:
+      title: Root Type for create-service
+      description: ''
+      required:
+        - duration
+        - tags
+        - name
+        - category_id
+        - description
+        - regular_price
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category_id:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        regular_price:
+          $ref: '#/components/schemas/amount'
+        duration:
+          $ref: '#/components/schemas/duration'
+      example:
+        name: Bug JP
+        description: O melhor bug de JP
+        category_id: c48bca23-317b-4250-99fc-1647d99d2fb7
+        tags:
+          - bug
+          - entretenimento
+        regular_price:
+          currency: BRL
+          amount: 450
+        duration:
+          unit: hours
+          value: 2
+    service-created:
+      title: Root Type for service-created
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+      example:
+        id: 69bf0203-a05a-4a84-bfa0-c0ea1791263f
+    amount:
+      title: Root Type for amount
+      description: ''
+      type: object
+      properties:
+        currency:
+          type: string
+        amount:
+          format: int32
+          type: integer
+      example:
+        currency: BRL
+        amount: 450
+    duration:
+      title: Root Type for duration
+      description: ''
+      type: object
+      properties:
+        unit:
+          type: string
+        value:
+          format: int32
+          type: integer
+      example:
+        unit: hours
+        value: 2
+    partner-service:
+      title: Root Type for partner-service
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category_id:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        regular_price:
+          type: object
+          properties:
+            currency:
+              type: string
+            amount:
+              format: int32
+              type: integer
+        duration:
+          type: object
+          properties:
+            unit:
+              type: string
+            value:
+              format: int32
+              type: integer
+      example:
+        id: 0b8836c1-17d1-41a7-ac8b-4c0a1969e1aa
+        name: Bug JP
+        description: O melhor bug de JP
+        category_id: c48bca23-317b-4250-99fc-1647d99d2fb7
+        tags:
+          - bug
+          - entretenimento
+        regular_price:
+          currency: BRL
+          amount: 450
+        duration:
+          unit: hours
+          value: 2
+    create-place:
+      title: Root Type for create-place
+      description: ''
+      required:
+        - city_id
+        - reference
+      type: object
+      properties:
+        city_id:
+          type: string
+        reference:
+          type: string
+      example:
+        city_id: ffd62bfe-dc7a-41b1-98df-039e8e096588
+        reference: praca da igreja matriz
+    place-created:
+      title: Root Type for place-created
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+      example:
+        id: ce1f8b94-474a-4b82-b9b0-c7fce8752b9e
+    service-place:
+      title: Root Type for service-place
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+        city_id:
+          type: string
+        reference:
+          type: string
+      example:
+        id: 23e6ee76-0f8f-4571-a259-c11abe2700c3
+        city_id: ffd62bfe-dc7a-41b1-98df-039e8e096588
+        reference: praca da igreja matriz
+
+tags:
+  -
+    name: partners
+    description: Partners operations
+  -
+    name: services
+    description: Services operations

@@ -1,0 +1,271 @@
+openapi: 3.0.2
+info:
+  title: Zug - Places
+  version: 1.0.0
+  description: A brand new API with no content.  Go nuts!
+  contact:
+    name: Claudio E. de Oliveira
+    email: claudioed.oliveira@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+paths:
+  /countries:
+    get:
+      tags:
+        - places
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/countries'
+          description: Countries
+      operationId: get-countries
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/country'
+        required: true
+      tags:
+        - places
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/country-created'
+          description: Country created successfully
+      operationId: create-country
+  /states:
+    get:
+      tags:
+        - places
+      parameters:
+        -
+          name: country_code
+          description: ''
+          schema:
+            type: string
+          in: query
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/states'
+          description: States from country
+      operationId: get-states
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/state'
+        required: true
+      tags:
+        - places
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/state-created'
+          description: State created successfully
+      operationId: create-state
+  /cities:
+    get:
+      tags:
+        - places
+      parameters:
+        -
+          name: state_id
+          description: ''
+          schema:
+            type: string
+          in: query
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cities'
+          description: Cities from state
+      operationId: get-cities
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/city'
+        required: true
+      tags:
+        - places
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/city-created'
+          description: It creates a city
+      operationId: create-city
+components:
+  schemas:
+    country:
+      title: Root Type for country
+      description: ''
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+      example:
+        code: BR
+        name: Brazil
+    state:
+      title: Root Type for state
+      description: ''
+      type: object
+      properties:
+        country_code:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+      example:
+        country_code: BR
+        code: SP
+        name: Sao Paulo
+    city:
+      title: Root Type for city
+      description: ''
+      type: object
+      properties:
+        state_id:
+          type: string
+        name:
+          type: string
+      example:
+        state_id: 1cd31548-bc1a-4baf-998f-f6dffe801a09
+        name: Sao Paulo
+    country-created:
+      title: Root Type for country-created
+      description: ''
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+      example:
+        code: BR
+        name: Brazil
+    state-created:
+      title: Root Type for state-created
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+        country_code:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+      example:
+        id: c9e176e9-c56e-4a63-88af-4b2750af5d0b
+        country_code: BR
+        code: SP
+        name: Sao Paulo
+    city-created:
+      title: Root Type for city-created
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+        state_id:
+          type: string
+        name:
+          type: string
+      example:
+        id: 08fd2585-53d5-485c-86ea-fa924ab32c8a
+        state_id: 1cd31548-bc1a-4baf-998f-f6dffe801a09
+        name: Sao Paulo
+    cities:
+      title: Root Type for cities
+      description: ''
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          state_id:
+            type: string
+          name:
+            type: string
+      example:
+        -
+          id: 08fd2585-53d5-485c-86ea-fa924ab32c8a
+          state_id: 1cd31548-bc1a-4baf-998f-f6dffe801a09
+          name: Sao Paulo
+        -
+          id: 56b0165c-34a2-4e8d-98a2-c090e073f18b
+          state_id: 1cd31548-bc1a-4baf-998f-f6dffe801a09
+          name: Campinas
+    states:
+      title: Root Type for states
+      description: ''
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          country_code:
+            type: string
+          code:
+            type: string
+          name:
+            type: string
+      example:
+        -
+          id: c9e176e9-c56e-4a63-88af-4b2750af5d0b
+          country_code: BR
+          code: SP
+          name: Sao Paulo
+        -
+          id: aa4376d5-e07d-4d17-95f5-9b43e196424f
+          country_code: BR
+          code: BA
+          name: Bahia
+    countries:
+      title: Root Type for countries
+      description: ''
+      type: array
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+          name:
+            type: string
+      example:
+        -
+          code: BR
+          name: Brazil
+        -
+          code: MX
+          name: Mexico
+tags:
+  -
+    name: places
+    description: Places Operation

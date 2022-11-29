@@ -1,0 +1,17 @@
+name: Check API design standards
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Run Spectral
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: stoplightio/spectral-action@v0.8.8
+        with:
+          file_glob: ./apis/*.yaml
+          spectral_ruleset: .spectral.yaml
