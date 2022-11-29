@@ -19,7 +19,7 @@ jobs:
       - run: inso --version
         id: inso_version
       - run: echo '${{ toJson(steps.inso_version.outputs) }}'
-      - run: inso generate config --workingDir apis --output deployment.yaml --tags github
+      - run: inso generate config --workingDir apis --output deployment.yaml --tags github --type declarative --ci
         id: config
       - run: echo '${{ toJson(steps.config.outputs) }}'
 #      - name: Generate declarative config
