@@ -1,0 +1,18 @@
+name: Generate API Gateway configuration
+
+jobs:
+  Linux:
+    name: Generating API Gateway configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - uses: kong/setup-inso@v1
+        with:
+          inso-version: 3.5.0
+          wrapper: true
+      - run: inso --version
+        id: inso_version
+      - run: echo '${{ toJson(steps.inso_version.outputs) }}'
+#      - name: Generate declarative config
+#        run: inso generate config "Designer Demo" --type declarative --ci
