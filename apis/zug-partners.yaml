@@ -72,6 +72,8 @@ paths:
         -
           name: id
           description: Partner ID
+          schema:
+            type: string
           in: path
           required: true
       responses:
