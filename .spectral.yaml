@@ -1,1 +1,10 @@
 extends: "spectral:oas"
+rules:
+  snake-case-enforcement:
+    message: "Property is not named in snake case: {{path}}, {{property}}"
+    severity: error
+    given: $..[?(@.type === 'object' && @.properties)].properties.*~
+    then:
+      function: casing
+      functionOptions:
+        type: snake
