@@ -42,12 +42,12 @@ error_400:
       type: array
       items:
         anyOf:
-          - $ref: "#/errorDetail"
+          - $ref: "#/components/schemas/errorDetail"
     links:
       type: array
       items:
         anyOf:
-          - $ref: "#/errorLink"
+          - $ref: "#/components/schemas/errorLink"
 error:
   type: object
   required:
@@ -61,3 +61,13 @@ error:
       type: string
     description:
       type: string
+error401:
+  type: object
+  properties:
+    error:
+      type: string
+    description:
+      type: string
+  example:
+    error : "Unauthorized"
+    description: "You cannot perform this operation"
