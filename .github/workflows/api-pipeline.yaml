@@ -27,6 +27,13 @@ jobs:
       - name: Validating configurations
         run: |
           echo  ${{ steps.finding-files.outputs.FILELIST }}
+          for i in "${kong_configs[@]}"; do
+            file_path=$(dirname "${i}")
+            file_name=$(basename "${i}")
+            cd file_path
+            cat file_name
+          done  
+
   deployment:
     name: Deploy API to Kong Konnect
     runs-on: ubuntu-latest
