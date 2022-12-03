@@ -23,7 +23,16 @@ jobs:
       - name: Finding kong configurations
         id: finding-files
         run: |
-          echo "::set-output name=FILELIST::$(./deployments/prod  -name '*.yaml' -print)"          
+          echo "::set-output name=FILELIST::$(./deployments/prod  -name '*.yaml' -print)"
+      - name: Validating configurations
+        run: |
+          IFS="," read -a kong_configs <<< ${{ steps.finding-files.outputs.FILELIST }}
+          for i in "${kong_configs[@]}"; do
+            file_path=$(dirname "${i}")
+            file_name=$(basename "${i}")
+            cd file_path
+            cat file_name
+          done    
 
   deployment:
     name: Deploy API to Kong Konnect
