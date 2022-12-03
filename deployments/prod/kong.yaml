@@ -1,0 +1,93 @@
+_format_version: "3.0"
+services:
+- host: zug-partners.upstream
+  name: zug-partners
+  path: /v1
+  port: 443
+  protocol: https
+  routes:
+  - methods:
+    - POST
+    name: Zug_-_Partners-create-partner
+    paths:
+    - ~/partners$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - GET
+    name: Zug_-_Partners-get-partner-services
+    paths:
+    - ~/partners/(?<id>[^\/]+)/services$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - POST
+    name: Zug_-_Partners-create-service
+    paths:
+    - ~/partners/(?<id>[^\/]+)/services$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - POST
+    name: Zug_-_Partners-upload-document-request
+    paths:
+    - ~/partners/(?<id>[^\/]+)/documents$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - GET
+    name: Zug_-_Partners-get-partner-service-places
+    paths:
+    - ~/partners/(?<id>[^\/]+)/services/(?<serviceId>[^\/]+)/places$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - POST
+    name: Zug_-_Partners-create-service-place
+    paths:
+    - ~/partners/(?<id>[^\/]+)/services/(?<serviceId>[^\/]+)/places$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - DELETE
+    name: Zug_-_Partners-delete-service-place
+    paths:
+    - ~/partners/(?<id>[^\/]+)/services/(?<serviceId>[^\/]+)/places$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - GET
+    name: Zug_-_Partners-get-partner-service
+    paths:
+    - ~/partners/(?<id>[^\/]+)/services/(?<serviceId>[^\/]+)$
+    strip_path: false
+    tags:
+    - OAS3_import
+  - methods:
+    - DELETE
+    name: Zug_-_Partners-delete-service
+    paths:
+    - ~/partners/(?<id>[^\/]+)/services/(?<serviceId>[^\/]+)$
+    strip_path: false
+    tags:
+    - OAS3_import
+  tags:
+  - OAS3_import
+upstreams:
+- name: zug-partners.upstream
+  tags:
+  - OAS3_import
+  targets:
+  - tags:
+    - OAS3_import
+    target: api.zug.digital:443
+  - tags:
+    - OAS3_import
+    target: sandbox-api.zug.digital:443

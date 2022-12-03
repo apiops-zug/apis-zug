@@ -15,6 +15,16 @@ jobs:
         with:
           file_glob: ./apis/*.yaml
           spectral_ruleset: .spectral.yaml
+  validate:
+    name: Checking API design standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Finding kong configurations
+        id: finding-files
+        run: |
+          echo "::set-output name=FILELIST::$(./deployments/prod  -name '*.yaml' -print)"          
+
   deployment:
     name: Deploy API to Kong Konnect
     runs-on: ubuntu-latest
