@@ -50,8 +50,8 @@ jobs:
           echo "::set-output name=KONG_DECS::$(find ./deployments/prod  -name '*.yaml' -print)"
       - name: Applying kong configurations
         run: |
-          IFS="," read -a kong_configs <<< ${{ steps.finding-files.outputs.FILELIST }}
+          IFS="," read -a kong_configs <<< ${{ steps.finding-files.outputs.KONG_DECS }}
           for i in "${kong_configs[@]}"; do
-            echo "Validating.. ${i}"
+            echo "Applying config.. ${i}"
             deck sync -s "${i}" --konnect-token ${{secrets.KONG_KONNECT_TOKEN}} --konnect-runtime-group-name zug-pool
           done
