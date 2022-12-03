@@ -24,14 +24,14 @@ jobs:
         id: finding-files
         run: |
           echo "::set-output name=FILELIST::$(find ./deployments/prod  -name '*.yaml' -print)"
-      - name: Validating configurations
+      - name: Validating kong configurations
         run: |
-          echo  ${{ steps.finding-files.outputs.FILELIST }}
           for i in "${kong_configs[@]}"; do
             file_path=$(dirname "${i}")
             file_name=$(basename "${i}")
             cd file_path
             cat file_name
+            deck validate -s file_name --konnect-token ${{secrets.KONG_KONNECT_TOKEN}} --konnect-runtime-group-name zug-pool
           done  
 
   deployment:
