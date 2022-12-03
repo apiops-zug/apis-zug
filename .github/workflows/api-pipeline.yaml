@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: kong/setup-deck@v1
       - name: Finding kong configurations
         id: finding-files
         run: |
@@ -32,11 +33,28 @@ jobs:
             cd file_path
             cat file_name
             deck validate -s file_name --konnect-token ${{secrets.KONG_KONNECT_TOKEN}} --konnect-runtime-group-name zug-pool
-          done  
-
-  deployment:
-    name: Deploy API to Kong Konnect
+          done
+  check-kong-connectivity:
+    name: Check Kong Kong Connectivity
     runs-on: ubuntu-latest
     steps:
       - uses: kong/setup-deck@v1
       - run: deck ping --konnect-token ${{secrets.KONG_KONNECT_TOKEN}}
+  deployment:
+    name: Deploy API to Kong Konnect
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: kong/setup-deck@v1
+      - name: Finding kong configurations
+        id: finding-files
+        run: |
+          echo "::set-output name=FILELIST::$(find ./deployments/prod  -name '*.yaml' -print)"
+      - name: Validating kong configurations
+        run: |
+          for i in "${kong_configs[@]}"; do
+            file_path=$(dirname "${i}")
+            file_name=$(basename "${i}")
+            cd file_path
+            cat file_name
+            deck sync -s file_name --konnect-token ${{secrets.KONG_KONNECT_TOKEN}} --konnect-runtime-group-name zug-pool
