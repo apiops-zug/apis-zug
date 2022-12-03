@@ -23,7 +23,7 @@ jobs:
       - name: Finding kong configurations
         id: finding-files
         run: |
-          echo "::set-output name=FILELIST::$(./deployments/prod  -name '*.yaml' -print)"
+          echo "::set-output name=FILELIST::$(find ./deployments/prod  -name '*.yaml' -print)"
       - name: Validating configurations
         run: |
           echo  ${{ steps.finding-files.outputs.FILELIST }}
