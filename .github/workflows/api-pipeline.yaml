@@ -34,6 +34,7 @@ jobs:
             deck validate -s "${i}" --konnect-token ${{secrets.KONG_KONNECT_TOKEN}} --konnect-runtime-group-name zug-pool
           done
   check-kong-connectivity:
+    needs: validate
     name: Check Kong Kong Connectivity
     runs-on: ubuntu-latest
     steps:
