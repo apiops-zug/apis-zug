@@ -27,11 +27,13 @@ jobs:
           echo "::set-output name=FILELIST::$(find ./deployments/prod  -name '*.yaml' -print)"
       - name: Validating kong configurations
         run: |
+          IFS="," read -a kong_configs <<< ${{ steps.finding-files.outputs.FILELIST }}
           for i in "${kong_configs[@]}"; do
             file_path=$(dirname "${i}")
             file_name=$(basename "${i}")
             cd file_path
             cat file_name
+            echo file_name
             deck validate -s file_name --konnect-token ${{secrets.KONG_KONNECT_TOKEN}} --konnect-runtime-group-name zug-pool
           done
   check-kong-connectivity:
@@ -46,15 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: kong/setup-deck@v1
-      - name: Finding kong configurations
+      - name: List Kong Configurations
         id: finding-files
         run: |
-          echo "::set-output name=FILELIST::$(find ./deployments/prod  -name '*.yaml' -print)"
-      - name: Validating kong configurations
-        run: |
-          for i in "${kong_configs[@]}"; do
-            file_path=$(dirname "${i}")
-            file_name=$(basename "${i}")
-            cd file_path
-            cat file_name
-            deck sync -s file_name --konnect-token ${{secrets.KONG_KONNECT_TOKEN}} --konnect-runtime-group-name zug-pool
+          echo "::set-output name=KONG_DECS::$(find ./deployments/prod  -name '*.yaml' -print)"
