@@ -1,4 +1,4 @@
-name: Check API design standards
+name: API pipeline
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  check:
     name: Checking API design standards
     runs-on: ubuntu-latest
     steps:
@@ -15,3 +15,8 @@ jobs:
         with:
           file_glob: ./apis/*.yaml
           spectral_ruleset: .spectral.yaml
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kong/setup-deck@v1
+      - run: deck version
