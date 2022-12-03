@@ -29,6 +29,8 @@ jobs:
         run: |
           IFS="," read -a kong_configs <<< ${{ steps.finding-files.outputs.FILELIST }}
           for i in "${kong_configs[@]}"; do
+            echo "${i}"
+          
             file_path=$(dirname "${i}")
             file_name=$(basename "${i}")
             cd file_path
