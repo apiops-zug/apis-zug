@@ -384,7 +384,7 @@ components:
           properties:
             street:
               type: string
-            postal_code:
+            postalCode:
               type: string
             city:
               type: string
