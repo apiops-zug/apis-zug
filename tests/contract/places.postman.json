@@ -1,0 +1,595 @@
+{
+  "_": {
+    "postman_id": "0eb75ab9-a9ed-4173-b729-8c6c30eb8eaf"
+  },
+  "item": [
+    {
+      "id": "34c37eb7-a928-4e4a-b5cd-147da59f0e29",
+      "name": "Contract Tests",
+      "item": [
+        {
+          "id": "bb2142bd-063a-43a8-b8e4-a3bc05f14857",
+          "name": "places",
+          "item": [
+            {
+              "id": "7e03b40d-feb4-4c23-b39b-5d98f997616a",
+              "name": "It return a list of countries",
+              "request": {
+                "name": "It return a list of countries",
+                "description": {
+                  "content": "It return a list of countries",
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET"
+              },
+              "response": [
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "480e570c-fc59-4b74-ac8c-240381a9cb09",
+                  "name": "Countries",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "countries"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "[\n  {\n    \"code\": \"BR\",\n    \"name\": \"Brazil\"\n  },\n  {\n    \"code\": \"MX\",\n    \"name\": \"Mexico\"\n  }\n]",
+                  "cookie": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "7b3ffa44-4e8b-4c7f-ae57-fdbc4c171582",
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Validate status 2xx \npm.test(\"[GET]::/countries - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                      "// Validate if response header has matching content-type\npm.test(\"[GET]::/countries - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                      "// Validate if response has JSON Body \npm.test(\"[GET]::/countries - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n",
+                      "// Response Validation\nconst schema = {\"title\":\"Root Type for countries\",\"description\":\"\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}}},\"example\":[{\"code\":\"BR\",\"name\":\"Brazil\"},{\"code\":\"MX\",\"name\":\"Mexico\"}]}\n\n// Validate if response matches JSON schema \npm.test(\"[GET]::/countries - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e6d5ed2e-605a-478d-9b59-392c2ef1431b",
+              "name": "It creates a country",
+              "request": {
+                "name": "It creates a country",
+                "description": {
+                  "content": "It creates a country",
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"BR\",\n  \"name\": \"Brazil\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "69dfdb1f-bd63-4039-87dd-c39a59ccd7d3",
+                  "name": "Country created successfully",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "countries"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "POST",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"code\": \"BR\",\n  \"name\": \"Brazil\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"code\": \"BR\",\n  \"name\": \"Brazil\"\n}",
+                  "cookie": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2b09b0e2-810d-44b5-befb-2168fa66ab3d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Validate status 2xx \npm.test(\"[POST]::/countries - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                      "// Validate if response header has matching content-type\npm.test(\"[POST]::/countries - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                      "// Validate if response has JSON Body \npm.test(\"[POST]::/countries - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n",
+                      "// Response Validation\nconst schema = {\"title\":\"Root Type for country-created\",\"description\":\"\",\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}},\"example\":{\"code\":\"BR\",\"name\":\"Brazil\"}}\n\n// Validate if response matches JSON schema \npm.test(\"[POST]::/countries - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              }
+            },
+            {
+              "id": "8d468bb9-e573-4a78-8a8f-0b77cbfdd13f",
+              "name": "get-states",
+              "request": {
+                "name": "get-states",
+                "description": {
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "states"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "country_code",
+                      "value": "cupidatat aliqua"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET"
+              },
+              "response": [
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "a4432d89-0d93-49f7-87ae-24de743496ff",
+                  "name": "States from country",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "states"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "country_code",
+                          "value": "cupidatat aliqua"
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "[\n  {\n    \"country_code\": \"BR\",\n    \"code\": \"SP\",\n    \"name\": \"Sao Paulo\"\n  },\n  {\n    \"country_code\": \"BR\",\n    \"code\": \"BA\",\n    \"name\": \"Bahia\"\n  }\n]",
+                  "cookie": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "aeb97c41-ef4a-4351-8e2b-812e07c1a977",
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Validate status 2xx \npm.test(\"[GET]::/states - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                      "// Validate if response header has matching content-type\npm.test(\"[GET]::/states - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                      "// Validate if response has JSON Body \npm.test(\"[GET]::/states - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n",
+                      "// Response Validation\nconst schema = {\"title\":\"Root Type for states\",\"description\":\"\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\"},\"country_code\":{\"type\":\"string\"},\"code\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}}},\"example\":[{\"id\":\"c9e176e9-c56e-4a63-88af-4b2750af5d0b\",\"country_code\":\"BR\",\"code\":\"SP\",\"name\":\"Sao Paulo\"},{\"id\":\"aa4376d5-e07d-4d17-95f5-9b43e196424f\",\"country_code\":\"BR\",\"code\":\"BA\",\"name\":\"Bahia\"}]}\n\n// Validate if response matches JSON schema \npm.test(\"[GET]::/states - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "54d29397-acb0-47d3-8654-27489d6ae03e",
+              "name": "It creates a state",
+              "request": {
+                "name": "It creates a state",
+                "description": {
+                  "content": "It creates a state",
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "states"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"BR\",\n  \"code\": \"SP\",\n  \"name\": \"Sao Paulo\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "b8baf200-2a3d-4189-af47-a8fb2315f150",
+                  "name": "State created successfully",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "states"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "POST",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"country_code\": \"BR\",\n  \"code\": \"SP\",\n  \"name\": \"Sao Paulo\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"country_code\": \"BR\",\n  \"code\": \"SP\",\n  \"name\": \"Sao Paulo\"\n}",
+                  "cookie": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "a310f6cc-446a-4e14-adbd-1935b723bfc0",
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Validate status 2xx \npm.test(\"[POST]::/states - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                      "// Validate if response header has matching content-type\npm.test(\"[POST]::/states - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                      "// Validate if response has JSON Body \npm.test(\"[POST]::/states - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n",
+                      "// Response Validation\nconst schema = {\"title\":\"Root Type for state-created\",\"description\":\"\",\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\"},\"country_code\":{\"type\":\"string\"},\"code\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}},\"example\":{\"id\":\"c9e176e9-c56e-4a63-88af-4b2750af5d0b\",\"country_code\":\"BR\",\"code\":\"SP\",\"name\":\"Sao Paulo\"}}\n\n// Validate if response matches JSON schema \npm.test(\"[POST]::/states - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              }
+            },
+            {
+              "id": "f78c2ec2-3027-4410-8117-51785633090b",
+              "name": "It return a list of cities",
+              "request": {
+                "name": "It return a list of cities",
+                "description": {
+                  "content": "It return a list of cities",
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "cities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "state_id",
+                      "value": "cupidatat aliqua"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET"
+              },
+              "response": [
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "bcc6fa30-c83a-4d7d-a04a-20460ae4fda3",
+                  "name": "Cities from state",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "cities"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "state_id",
+                          "value": "cupidatat aliqua"
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "[\n  {\n    \"state_id\": \"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\n    \"name\": \"Sao Paulo\"\n  },\n  {\n    \"state_id\": \"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\n    \"name\": \"Campinas\"\n  }\n]",
+                  "cookie": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "9df0bab3-41e6-499a-a9d0-a09d1e70e93e",
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Validate status 2xx \npm.test(\"[GET]::/cities - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                      "// Validate if response header has matching content-type\npm.test(\"[GET]::/cities - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                      "// Validate if response has JSON Body \npm.test(\"[GET]::/cities - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n",
+                      "// Response Validation\nconst schema = {\"title\":\"Root Type for cities\",\"description\":\"\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\"},\"state_id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}}},\"example\":[{\"id\":\"08fd2585-53d5-485c-86ea-fa924ab32c8a\",\"state_id\":\"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\"name\":\"Sao Paulo\"},{\"id\":\"56b0165c-34a2-4e8d-98a2-c090e073f18b\",\"state_id\":\"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\"name\":\"Campinas\"}]}\n\n// Validate if response matches JSON schema \npm.test(\"[GET]::/cities - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "dd05d412-644e-4121-b67d-b33ff8a4ec8f",
+              "name": "It creates a city",
+              "request": {
+                "name": "It creates a city",
+                "description": {
+                  "content": "It creates a city",
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "cities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state_id\": \"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\n  \"name\": \"Sao Paulo\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "f81d48df-7dc7-42e7-b19a-045ab2b0db1b",
+                  "name": "It creates a city",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "cities"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "POST",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state_id\": \"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\n  \"name\": \"Sao Paulo\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"state_id\": \"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\n  \"name\": \"Sao Paulo\"\n}",
+                  "cookie": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "f6fbb797-4f5d-4e23-9e66-976caff70e54",
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Validate status 2xx \npm.test(\"[POST]::/cities - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                      "// Validate if response header has matching content-type\npm.test(\"[POST]::/cities - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                      "// Validate if response has JSON Body \npm.test(\"[POST]::/cities - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n",
+                      "// Response Validation\nconst schema = {\"title\":\"Root Type for city-created\",\"description\":\"\",\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\"},\"state_id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}},\"example\":{\"id\":\"08fd2585-53d5-485c-86ea-fa924ab32c8a\",\"state_id\":\"1cd31548-bc1a-4baf-998f-f6dffe801a09\",\"name\":\"Sao Paulo\"}}\n\n// Validate if response matches JSON schema \npm.test(\"[POST]::/cities - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              }
+            }
+          ],
+          "event": []
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:4010",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0eb75ab9-a9ed-4173-b729-8c6c30eb8eaf",
+    "name": "Zug - Places",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "A brand new API with no content.  Go nuts!\n\nContact Support:\n Name: Claudio E. de Oliveira\n Email: claudioed.oliveira@gmail.com",
+      "type": "text/plain"
+    }
+  }
+}
